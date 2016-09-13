@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Android logcat
+file_extensions:
+  - log
+scope: text.log
+contexts:
+
+  main:
+    - include: comment
+    - include: line
+
+  comment:
+    - match: '^([-]{9}).*'
+      scope: comment.Comment.semicolon.log
+      captures:
+        1: punctuation.definition.comment.log
+
+  line:
+    - match: '^(\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{3})\s*(\d+)\s*(\d+)\s*(V|D|I|W|E)\s*([^\s]*)\s*(:)\s*(.+)$'
+      captures:
+        1 : constant.numeric.time.log
+        2 : constant.numeric.gid.log
+        3 : constant.numeric.pid.log
+        4 : keyword.level.log
+        5 : string.tag.log
+        6 : punctuation.separator.log
